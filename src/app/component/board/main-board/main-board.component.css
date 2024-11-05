@@ -1,0 +1,13 @@
+.col-lg-1,
+.col-lg-8 {
+  border-right: 1px solid;
+  height: 100vh;
+}
+.element-btn {
+  padding: 12px 15px;
+  border: 1px solid gray;
+  margin: 10px 0;
+}
+li {
+  list-style: none;
+}

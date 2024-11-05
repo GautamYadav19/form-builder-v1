@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-1">
+      <div *ngFor="let element of Elements">
+        <li
+          draggable="true"
+          (dragstart)="drag($event, element.elementName)"
+          class="element-btn"
+        >
+          {{ element.elementName }}
+        </li>
+      </div>
+    </div>
+    <div class="col-lg-8" (drop)="drop($event)" (dragover)="allowDrop($event)">
+      <div *ngFor="let element of showListOfRenderELements">
+        <ng-component
+          appRenderComponent
+          [componentId]="element.componentId"
+          [componentType]="element.componentType"
+        ></ng-component>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div *ngFor="let element of showListOfRenderELements">
+        <ng-component
+          appRenderComponent
+          [componentId]="element.componentId"
+          [componentType]="element.editElement"
+        ></ng-component>
+      </div>
+    </div>
+  </div>
+</div>
