@@ -1,4 +1,4 @@
-<p>create-input-element works!</p>
+<p>create-input-element works!{{ identifier }}</p>
 <label for="label">Label Name</label>
 <input #label class="form-control" type="text" />
 <button
@@ -7,3 +7,40 @@
 >
   ADD
 </button>
+<hr class="mt-2 mb-2" />
+<div class="row">
+  <form [formGroup]="form">
+    <div class="col-lg-6">
+      <label for="type">Type of element</label>
+      <select class="form-control" name="" formControlName="type">
+        <option *ngFor="let type of inputTypes" value="{{ type }}">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+    <div class="col-lg-6">
+      <label>class of element</label>
+      <input class="form-control" type="text" formControlName="class" />
+    </div>
+    <div class="col-lg-6">
+      <label>Default Value</label>
+      <input class="form-control" type="text" formControlName="defaultValue" />
+    </div>
+    <div class="col-lg-6">
+      <label>Form Control Name</label>
+      <input
+        class="form-control"
+        type="text"
+        formControlName="formControlName"
+      />
+    </div>
+    <div class="row">
+      <button
+        class="btn btn-outline-secondary btn-sm m-2"
+        (click)="basicInputField()"
+      >
+        ADD
+      </button>
+    </div>
+  </form>
+</div>

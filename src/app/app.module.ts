@@ -7,6 +7,7 @@ import { CreateInputElementComponent } from './component/elements/input-element/
 import { EditInputElementComponent } from './component/elements/input-element/edit-input-element/edit-input-element.component';
 import { MainBoardComponent } from './component/board/main-board/main-board.component';
 import { RenderComponentDirective } from './directives/render-component.directive';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,13 +15,10 @@ import { RenderComponentDirective } from './directives/render-component.directiv
     CreateInputElementComponent,
     EditInputElementComponent,
     MainBoardComponent,
-    RenderComponentDirective
+    RenderComponentDirective,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
