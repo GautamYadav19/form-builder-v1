@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CreateInputElementComponent } from '../../elements/input-element/create-input-element/create-input-element.component';
 import { EditInputElementComponent } from '../../elements/input-element/edit-input-element/edit-input-element.component';
 import { LocalService } from '../../custom-classes/localService';
+import { CommonLayoutRenderComponent } from '../../layout/common-layout-render/common-layout-render.component';
+import { EditLayoutElementsComponent } from '../../layout/edit-layout-elements/edit-layout-elements.component';
 
 @Component({
   selector: 'app-main-board',
@@ -17,15 +19,21 @@ export class MainBoardComponent implements OnInit {
       isEditable: false,
     },
   ];
-
+  layoutDetails: any;
   showListOfRenderELements: any[] = [];
+
   showEditElement: any;
+
+  showlistOfRenderLayoutElement: any[] = [];
   constructor(private ls: LocalService) {}
+
+  layoutElementData(data: any) {
+    this.layoutDetails = data;
+  }
 
   drag(event: DragEvent, element: any) {
     event.dataTransfer?.setData('elementName', element);
   }
-
   drop(event: DragEvent) {
     event.preventDefault();
 
@@ -38,23 +46,76 @@ export class MainBoardComponent implements OnInit {
     if (this.ls.getData('showListOfRenderELements')) {
       this.updateShowList();
     }
-    let componentId = this.generateUniqueId();
-    // Append new element to the list
-    this.showListOfRenderELements.push({
-      componentId: componentId,
-      elementName: newElement.elementName,
-      componentType: newElement.element,
-      editElement: newElement.editElement,
-      isEditable: false,
-    });
-    this.showEditElement = [
-      {
+    if (selectElement) {
+      let componentId = this.generateUniqueId();
+      // Append new element to the list
+      this.showListOfRenderELements.push({
         componentId: componentId,
         elementName: newElement.elementName,
+        componentType: newElement.element,
         editElement: newElement.editElement,
-      },
-    ];
-    this.ls.saveData('showListOfRenderELements', this.showListOfRenderELements);
+        isEditable: false,
+      });
+      this.showEditElement = [
+        {
+          componentId: componentId,
+          elementName: newElement.elementName,
+          editElement: newElement.editElement,
+        },
+      ];
+      this.ls.saveData(
+        'showListOfRenderELements',
+        this.showListOfRenderELements
+      );
+    }
+
+    let layout = JSON.parse(event.dataTransfer?.getData('layout')!);
+    console.log('[]', this.showlistOfRenderLayoutElement);
+    if (this.showlistOfRenderLayoutElement.length === 0) {
+      this.showlistOfRenderLayoutElement.push({
+        componentType: CommonLayoutRenderComponent,
+        editElement: EditLayoutElementsComponent,
+        data: layout,
+      });
+    } else if (this.showlistOfRenderLayoutElement.length > 0) {
+      let innerLayout = this.ls.getData('innerLayout');
+      if (innerLayout) {
+        let existingElement = this.showlistOfRenderLayoutElement.find(
+          (e: any) => {
+            console.log(
+              e.data.layoutElementId === innerLayout.identifier,
+              e.data.layoutElementId,
+              innerLayout.identifier
+            );
+
+            return e.data.layoutElementId === innerLayout.identifier;
+          }
+        );
+
+        if (existingElement && innerLayout) {
+          existingElement[innerLayout.class + ':' + innerLayout.componentId] =
+            innerLayout;
+        }
+
+        console.log(
+          'showlistOfRenderLayoutElement',
+          this.showlistOfRenderLayoutElement
+        );
+        console.log('push karo');
+        this.ls.removeData('innerLayout');
+      } else {
+        console.log('else');
+        this.showlistOfRenderLayoutElement.push({
+          componentType: CommonLayoutRenderComponent,
+          editElement: EditLayoutElementsComponent,
+          data: layout,
+        });
+      }
+    }
+
+    // if (this.showlistOfRenderLayoutElement.length > 0) {
+
+    // }
   }
   updateShowList() {
     let tempList = this.ls.getData('showListOfRenderELements');

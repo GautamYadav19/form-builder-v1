@@ -37,7 +37,6 @@ export class CreateInputElementComponent implements OnInit {
     let element = list.find((e: any) => e.componentId == this.identifier);
     this.label = element?.data?.label;
     this.type = element?.data?.basicInputField?.type;
-    console.log(this.type);
 
     this.class = element?.data?.basicInputField?.class;
     this.formControlName = element?.data?.basicInputField?.formControlName;

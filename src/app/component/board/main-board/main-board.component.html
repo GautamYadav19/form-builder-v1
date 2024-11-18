@@ -1,6 +1,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-1">
+      <app-list-of-layout-element
+        (layoutElementData)="layoutElementData($event)"
+      >
+      </app-list-of-layout-element>
+      <hr />
       <div *ngFor="let element of Elements">
         <li
           draggable="true"
@@ -12,21 +17,48 @@
       </div>
     </div>
     <div class="col-lg-8" (drop)="drop($event)" (dragover)="allowDrop($event)">
-      <div *ngFor="let element of showListOfRenderELements">
-        <ng-component
-          appRenderComponent
-          [componentId]="element.componentId"
-          [componentType]="element.componentType"
-        ></ng-component>
+      <!-- <div *ngIf="showlistOfRenderLayoutElement.length <= 0">
+        <div *ngFor="let element of showListOfRenderELements">
+          <ng-component
+            appRenderComponent
+            [componentId]="element.componentId"
+            [componentType]="element.componentType"
+          ></ng-component>
+        </div>
+      </div> -->
+      <div *ngIf="showlistOfRenderLayoutElement.length > 0">
+        <div *ngFor="let element of showlistOfRenderLayoutElement">
+          <hr class="mt-2" />
+          <ng-component
+            appRenderComponent
+            [componentId]="element.data.layoutElementId"
+            [componentType]="element.componentType"
+            [layoutData]="element.data"
+          ></ng-component>
+        </div>
       </div>
     </div>
     <div class="col-lg-3">
-      <div *ngFor="let element of showEditElement">
-        <ng-component
-          appRenderComponent
-          [componentId]="element.componentId"
-          [componentType]="element.editElement"
-        ></ng-component>
+      <div *ngIf="showlistOfRenderLayoutElement.length <= 0">
+        <div *ngFor="let element of showEditElement">
+          <ng-component
+            appRenderComponent
+            [componentId]="element.componentId"
+            [componentType]="element.editElement"
+          ></ng-component>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div *ngIf="showlistOfRenderLayoutElement.length > 0">
+          <div *ngFor="let element of showlistOfRenderLayoutElement">
+            <ng-component
+              appRenderComponent
+              [componentId]="element.componentId"
+              [componentType]="element.editElement"
+              [layoutData]="element.data"
+            ></ng-component>
+          </div>
+        </div>
       </div>
     </div>
   </div>

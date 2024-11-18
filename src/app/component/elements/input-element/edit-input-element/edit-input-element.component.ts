@@ -79,7 +79,6 @@ export class EditInputElementComponent implements OnInit, AfterViewInit {
     let list = this.ls.getData('showListOfRenderELements');
     let index = list.findIndex((e: any) => e.componentId == this.identifier);
     let element = list.find((e: any) => e.componentId == this.identifier);
-    console.log(this.form.value);
 
     element.data.basicInputField = this.form.value;
     list.splice(index, 1, element);

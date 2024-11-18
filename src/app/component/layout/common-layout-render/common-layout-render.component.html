@@ -1,0 +1,17 @@
+<div
+  class="{{ class }}"
+  (drop)="drop($event)"
+  draggable="true"
+  (dragstart)="drag($event)"
+  [ngStyle]="{ 'background-color': class == 'container' ? 'red' : 'blue' }"
+  style="height: 100px; width: auto"
+>
+  <div *ngFor="let element of droppedItems">
+    <ng-component
+      appRenderComponent
+      [componentId]="element.componentId"
+      [componentType]="element.componentType"
+      [layoutData]="element.data"
+    ></ng-component>
+  </div>
+</div>

@@ -8,6 +8,9 @@ import { EditInputElementComponent } from './component/elements/input-element/ed
 import { MainBoardComponent } from './component/board/main-board/main-board.component';
 import { RenderComponentDirective } from './directives/render-component.directive';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ListOfLayoutElementComponent } from './component/layout/list-of-layout-element/list-of-layout-element.component';
+import { CommonLayoutRenderComponent } from './component/layout/common-layout-render/common-layout-render.component';
+import { EditLayoutElementsComponent } from './component/layout/edit-layout-elements/edit-layout-elements.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     EditInputElementComponent,
     MainBoardComponent,
     RenderComponentDirective,
+    ListOfLayoutElementComponent,
+    CommonLayoutRenderComponent,
+    EditLayoutElementsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
