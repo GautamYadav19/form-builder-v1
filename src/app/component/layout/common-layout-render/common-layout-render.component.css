@@ -1,0 +1,13 @@
+/* .container {
+  padding: 0 !important;
+  margin: 10px !important;
+}
+
+.col-md-6 {
+  width: 50% !important;
+} */
+
+.highlight {
+  border: 2px dashed #000; /* For example, a dashed border */
+  background-color: rgba(0, 0, 0, 0.1); /* Light background highlight */
+}

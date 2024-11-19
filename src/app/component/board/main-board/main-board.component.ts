@@ -70,7 +70,7 @@ export class MainBoardComponent implements OnInit {
     }
 
     let layout = JSON.parse(event.dataTransfer?.getData('layout')!);
-    console.log('[]', this.showlistOfRenderLayoutElement);
+
     if (this.showlistOfRenderLayoutElement.length === 0) {
       this.showlistOfRenderLayoutElement.push({
         componentType: CommonLayoutRenderComponent,
@@ -82,12 +82,6 @@ export class MainBoardComponent implements OnInit {
       if (innerLayout) {
         let existingElement = this.showlistOfRenderLayoutElement.find(
           (e: any) => {
-            console.log(
-              e.data.layoutElementId === innerLayout.identifier,
-              e.data.layoutElementId,
-              innerLayout.identifier
-            );
-
             return e.data.layoutElementId === innerLayout.identifier;
           }
         );
@@ -101,10 +95,9 @@ export class MainBoardComponent implements OnInit {
           'showlistOfRenderLayoutElement',
           this.showlistOfRenderLayoutElement
         );
-        console.log('push karo');
         this.ls.removeData('innerLayout');
+        this.ls.saveData('layout', this.showlistOfRenderLayoutElement);
       } else {
-        console.log('else');
         this.showlistOfRenderLayoutElement.push({
           componentType: CommonLayoutRenderComponent,
           editElement: EditLayoutElementsComponent,
@@ -112,7 +105,7 @@ export class MainBoardComponent implements OnInit {
         });
       }
     }
-
+    event.dataTransfer?.clearData();
     // if (this.showlistOfRenderLayoutElement.length > 0) {
 
     // }

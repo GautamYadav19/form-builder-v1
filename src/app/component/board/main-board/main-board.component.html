@@ -26,9 +26,14 @@
           ></ng-component>
         </div>
       </div> -->
+      <div class="container" style="background-color: red">
+        <div class="row" style="background-color: pink">
+          <div class="col-md-6" style="background-color: black">1</div>
+          <div class="col-md-6" style="background-color: beige">2</div>
+        </div>
+      </div>
       <div *ngIf="showlistOfRenderLayoutElement.length > 0">
         <div *ngFor="let element of showlistOfRenderLayoutElement">
-          <hr class="mt-2" />
           <ng-component
             appRenderComponent
             [componentId]="element.data.layoutElementId"

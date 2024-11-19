@@ -9,15 +9,20 @@ type Layout = {
   styleUrls: ['./list-of-layout-element.component.css'],
 })
 export class ListOfLayoutElementComponent implements OnInit {
-  listOfLayoutElment = [{ elementName: 'container' }, { elementName: 'row' }];
+  listOfLayoutElment = [
+    { elementName: 'container' },
+    { elementName: 'row' },
+    { elementName: 'col-md-6' },
+  ];
   @Output() layoutElementData = new EventEmitter();
   constructor(private ls: LocalService) {}
   drag(event: DragEvent, elementName: string) {
+    console.log('list', elementName);
+
     if (elementName == 'container') {
       let data = {
         layoutElementId: this.generateUniqueId(),
         class: 'container',
-        defaultBgColor: 'grey',
       };
       event.dataTransfer?.setData('layout', JSON.stringify(data));
     }
@@ -25,8 +30,16 @@ export class ListOfLayoutElementComponent implements OnInit {
       let data = {
         layoutElementId: this.generateUniqueId(),
         class: 'row',
-        defaultBgColor: 'grey',
       };
+      event.dataTransfer?.setData('layout', JSON.stringify(data));
+    }
+    if (elementName == 'col-md-6') {
+      let data = {
+        layoutElementId: this.generateUniqueId(),
+        class: 'col-md-6',
+      };
+      console.log('col-6');
+
       event.dataTransfer?.setData('layout', JSON.stringify(data));
     }
   }

@@ -9,6 +9,7 @@ import { LocalService } from '../../custom-classes/localService';
 })
 export class CommonLayoutRenderComponent implements OnInit {
   constructor(private ls: LocalService) {}
+  isHighlighted: boolean = false;
   identifier!: string;
   class: any;
   droppedItems: any[] = [];
@@ -19,34 +20,48 @@ export class CommonLayoutRenderComponent implements OnInit {
     this.identifier = identifier;
   }
 
-  drop(event: any) {
+  onDragEnter(event: Event, newClass: any) {
+    this.isHighlighted = true;
+    console.log('enter');
+  }
+
+  onDragLeave(event: Event) {
+    this.isHighlighted = false;
+  }
+  drop(event: DragEvent) {
     event.preventDefault();
+    event.stopImmediatePropagation();
+
+    this.isHighlighted = false;
+    let newElementData = JSON.parse(event.dataTransfer?.getData('layout')!);
+    console.log(newElementData.class);
+
     let componentId = this.generateUniqueId();
+    // Save data using the LocalService
     this.ls.saveData('innerLayout', {
       componentId: componentId,
       identifier: this.identifier,
-      class: this.class,
       componentType: CommonLayoutRenderComponent,
-      data: { data: this.class },
+      data: { data: newElementData.class },
     });
 
+    // Add the new item to droppedItems array
     this.droppedItems.push({
       componentId: componentId,
       identifier: this.identifier,
-      class: this.class,
       componentType: CommonLayoutRenderComponent,
-      data: { data: this.class },
+      data: { class: newElementData.class },
     });
   }
 
-  drag(event: DragEvent) {
-    event.preventDefault();
-  }
   generateUniqueId(): string {
     const now = new Date();
     const date = now.toISOString().slice(0, 10).replace(/-/g, '');
     const seconds = Math.floor(now.getTime() / 1000);
     const milliseconds = now.getMilliseconds();
     return `${date}-${seconds}-${milliseconds}`;
+  }
+  trackByComponentId(index: number, item: any): string {
+    return item.componentId; // Use the componentId as a unique identifier
   }
 }
